@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MOUD | Timeless Accessories for Everyday Luxury</title>
+  <meta name="description" content="MOUD is creating quiet luxury accessories designed for elevated everyday moments. Join the waitlist for early access to the first collection." />
+  <meta name="keywords" content="luxury handbags, premium accessories, everyday luxury, minimalist fashion accessories, elegant handbags, women's fashion accessories" />
+  <meta property="og:title" content="MOUD | Timeless Accessories for Everyday Luxury" />
+  <meta property="og:description" content="Join the MOUD waitlist for early access, launch announcements, and exclusive previews." />
+  <meta property="og:type" content="website" />
+  <meta name="robots" content="index,follow" />
+  <link rel="canonical" href="https://moudessentials.com/" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.34.0/tabler-icons.min.css" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    /* ── LP layout overrides for new structure ── */
+
+    :root {
+      --ivory: #FDFAF5;
+      --accent-gold: #FFD999;
+      --accent-dark: #C49A3C;
+      --text-main: #1A1A1A;
+      --text-muted: #888;
+      --border-light: rgba(0,0,0,0.08);
+    }
+
+    /* Reset body background for the new layout */
+    body {
+      background: var(--ivory);
+    }
+
+    /* ── NAV ── */
+    .lp-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 3rem;
+      border-bottom: 0.5px solid var(--border-light);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(253,250,245,0.92);
+      backdrop-filter: blur(10px);
+    }
+
+    .lp-logo {
+      display: inline-flex;
+      align-items: center;
+      text-decoration: none;
+    }
+
+    .lp-logo img {
+      height: 5.6rem;
+      width: auto;
+      display: block;
+    }
+
+    .lp-nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .lp-nav-links a {
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .lp-nav-links a:hover { color: var(--accent-dark); }
+
+    /* ── HERO ── */
+    .lp-hero {
+      position: relative;
+      min-height: 580px;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+    }
+
+    .lp-hero-img {
+      position: absolute;
+      inset: 0;
+    }
+
+    .lp-hero-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .lp-hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(253,250,245,0.92) 0%, rgba(253,250,245,0.3) 50%, transparent 100%);
+    }
+
+    .lp-hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 3rem;
+      width: 100%;
+    }
+
+    .lp-hero-eyebrow {
+      font-size: 9px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--accent-dark);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .lp-hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 28px;
+      height: 0.5px;
+      background: var(--accent-dark);
+    }
+
+    .lp-hero-headline {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(38px, 6vw, 58px);
+      font-weight: 300;
+      line-height: 1.1;
+      color: var(--text-main);
+      max-width: 520px;
+      margin: 0 0 0.5rem;
+    }
+
+    .lp-hero-headline em {
+      font-style: italic;
+      color: var(--accent-dark);
+    }
+
+    .lp-hero-sub {
+      font-size: 12px;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      margin-top: 0.75rem;
+    }
+
+    /* ── SIGNUP BAR ── */
+    .lp-signup-bar {
+      background: var(--text-main);
+      padding: 2.5rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .lp-signup-text { flex: 1; min-width: 200px; }
+
+    .lp-signup-text p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 300;
+      color: #fff;
+      line-height: 1.4;
+      margin: 0;
+    }
+
+    .lp-signup-text span {
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent-gold);
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .lp-signup-form {
+      display: flex;
+      gap: 0;
+      flex: 1;
+      max-width: 400px;
+      min-width: 260px;
+    }
+
+    .lp-signup-form input {
+      flex: 1;
+      background: rgba(255,255,255,0.08);
+      border: 0.5px solid rgba(255,255,255,0.2);
+      border-right: none;
+      padding: 0 1.25rem;
+      height: 46px;
+      font-size: 12px;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      letter-spacing: 0.5px;
+      outline: none;
+      border-radius: 0;
+    }
+
+    .lp-signup-form input::placeholder { color: rgba(255,255,255,0.35); }
+
+    .lp-signup-form button {
+      background: var(--accent-gold);
+      border: none;
+      padding: 0 1.5rem;
+      height: 46px;
+      font-size: 9px;
+      font-family: 'Inter', sans-serif;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--text-main);
+      cursor: pointer;
+      white-space: nowrap;
+      font-weight: 500;
+      border-radius: 0;
+      transition: background 0.2s;
+    }
+
+    .lp-signup-form button:hover { background: #f0ca85; }
+    .lp-signup-form button:disabled { opacity: 0.7; cursor: progress; }
+
+    .lp-signup-status {
+      font-size: 11px;
+      color: rgba(255,255,255,0.6);
+      margin-top: 0.5rem;
+      min-height: 1rem;
+    }
+
+    .lp-signup-status.is-error { color: #f09090; }
+
+    .lp-signup-confirmed {
+      color: #fff;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      font-style: italic;
+    }
+
+    /* ── TEASE CARDS ── */
+    .lp-tease {
+      padding: 4rem 3rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .lp-tease-card {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .lp-tease-img {
+      aspect-ratio: 3/4;
+      overflow: hidden;
+    }
+
+    .lp-tease-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+
+    .lp-tease-card:hover .lp-tease-img img { transform: scale(1.03); }
+
+    .lp-tease-label {
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .lp-tease-caption {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 16px;
+      font-weight: 300;
+      color: var(--text-main);
+      font-style: italic;
+      margin: 0;
+    }
+
+    /* ── QUOTE BANNER ── */
+    .lp-drop-banner {
+      background: var(--accent-gold);
+      padding: 1.25rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .lp-drop-banner p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--text-main);
+      margin: 0;
+    }
+
+    .lp-drop-badge {
+      font-size: 9px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--text-main);
+      border: 0.5px solid rgba(0,0,0,0.2);
+      padding: 6px 14px;
+      white-space: nowrap;
+    }
+
+    /* ── PHILOSOPHY ── */
+    .lp-philosophy {
+      padding: 4rem 3rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      border-top: 0.5px solid var(--border-light);
+    }
+
+    .lp-phil-img {
+      overflow: hidden;
+    }
+
+    .lp-phil-img img {
+      width: 100%;
+      aspect-ratio: 4/5;
+      object-fit: cover;
+      display: block;
+    }
+
+    .lp-phil-eyebrow {
+      font-size: 9px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--accent-dark);
+      margin-bottom: 1.25rem;
+    }
+
+    .lp-accent-line {
+      width: 40px;
+      height: 1px;
+      background: var(--accent-gold);
+      margin-bottom: 1.5rem;
+    }
+
+    .lp-phil-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(28px, 3.5vw, 40px);
+      font-weight: 300;
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+      color: var(--text-main);
+    }
+
+    .lp-phil-body {
+      font-size: 13px;
+      line-height: 1.9;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+    }
+
+    .lp-socials {
+      display: flex;
+      gap: 1.25rem;
+      align-items: center;
+    }
+
+    .lp-social-link {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .lp-social-link:hover { color: var(--accent-dark); }
+    .lp-social-link i { font-size: 17px; }
+
+    /* ── FOOTER ── */
+    .lp-footer {
+      padding: 2rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 0.5px solid var(--border-light);
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .lp-footer-logo img {
+      height: 3.4rem;
+      width: auto;
+      display: block;
+    }
+
+    .lp-footer-links {
+      display: flex;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+    }
+
+    .lp-footer-links a {
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .lp-footer-links a:hover { color: var(--text-main); }
+
+    .lp-footer-socials { display: flex; gap: 1rem; align-items: center; }
+    .lp-footer-socials a { color: var(--text-muted); transition: color 0.2s; }
+    .lp-footer-socials a:hover { color: var(--accent-dark); }
+    .lp-footer-socials i { font-size: 18px; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .lp-nav { padding: 1.25rem 1.5rem; }
+      .lp-tease { grid-template-columns: 1fr 1fr; padding: 3rem 1.5rem; }
+      .lp-philosophy { grid-template-columns: 1fr; gap: 2rem; padding: 3rem 1.5rem; }
+      .lp-signup-bar { padding: 2rem 1.5rem; }
+      .lp-hero-content { padding: 2rem 1.5rem; }
+      .lp-drop-banner { padding: 1.25rem 1.5rem; }
+      .lp-footer { padding: 1.5rem; }
+    }
+
+    @media (max-width: 600px) {
+      .lp-nav { padding: 1rem 1.25rem; }
+      .lp-nav-links { gap: 1.25rem; }
+      .lp-tease { grid-template-columns: 1fr; padding: 2.5rem 1.25rem; }
+      .lp-signup-bar { flex-direction: column; align-items: flex-start; gap: 1.25rem; padding: 1.75rem 1.25rem; }
+      .lp-signup-form { max-width: 100%; width: 100%; }
+      .lp-drop-banner { flex-direction: column; gap: 0.75rem; align-items: flex-start; }
+      .lp-philosophy { padding: 2.5rem 1.25rem; }
+      .lp-footer { padding: 1.5rem 1.25rem; flex-direction: column; align-items: flex-start; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="lp-nav" aria-label="Primary navigation">
+    <a class="lp-logo" href="/">
+      <img src="/moud.png" alt="MOUD" />
+    </a>
+    <ul class="lp-nav-links">
+      <li><a href="#drop">The drop</a></li>
+      <li><a href="#world">Our world</a></li>
+      <li><a href="#waitlist">Early access</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="lp-hero" aria-label="Hero">
+    <div class="lp-hero-img">
+      <img src="/IMG_2452.png" alt="MOUD La Muse — hero shot" />
+    </div>
+    <div class="lp-hero-overlay"></div>
+    <div class="lp-hero-content">
+      <p class="lp-hero-eyebrow">La Muse — Fall 2026 Drop</p>
+      <h1 class="lp-hero-headline">The mood is <em>almost</em> ready.</h1>
+      <p class="lp-hero-sub">Something we've been building toward. Be the first to know.</p>
+    </div>
+  </section>
+
+  <!-- SIGNUP BAR -->
+  <div class="lp-signup-bar" id="waitlist">
+    <div class="lp-signup-text">
+      <span>Early access</span>
+      <p>Get first access before the drop goes live.</p>
+    </div>
+    <div>
+      <div class="lp-signup-form" id="bar-form-wrap">
+        <input type="email" id="bar-email" placeholder="Your email address" aria-label="Email address" />
+        <button type="button" id="bar-submit">I'm in</button>
+      </div>
+      <p class="lp-signup-consent">By joining, you agree to receive emails from MOUD. Unsubscribe anytime.</p>
+      <p class="lp-signup-status" id="bar-status" role="status" aria-live="polite"></p>
+    </div>
+  </div>
+
+  <!-- TEASE CARDS -->
+  <section class="lp-tease" id="drop" aria-label="Product preview">
+    <div class="lp-tease-card">
+      <div class="lp-tease-img">
+        <img src="/IMG_2454.png" alt="La Muse — close-up detail" />
+      </div>
+      <p class="lp-tease-label">La Muse — Detail</p>
+      <p class="lp-tease-caption">Structured. Deliberate. Yours.</p>
+    </div>
+    <div class="lp-tease-card">
+      <div class="lp-tease-img">
+        <img src="/IMG_2452.png" alt="La Muse — hardware detail" />
+      </div>
+      <p class="lp-tease-label">The hardware</p>
+      <p class="lp-tease-caption">Every clasp chosen with intention.</p>
+    </div>
+    <div class="lp-tease-card">
+      <div class="lp-tease-img">
+        <img src="/IMG_2455.png" alt="La Muse — lifestyle shot" />
+      </div>
+      <p class="lp-tease-label">In the wild</p>
+      <p class="lp-tease-caption">A bag that moves the way you do.</p>
+    </div>
+  </section>
+
+  <!-- QUOTE BANNER -->
+  <div class="lp-drop-banner">
+    <p>"A mood is felt before it's seen."</p>
+    <div class="lp-drop-badge">Dropping Fall 2026</div>
+  </div>
+
+  <!-- PHILOSOPHY -->
+  <section class="lp-philosophy" id="world" aria-label="About MOUD">
+    <div class="lp-phil-img">
+      <img src="/IMG_2455.png" alt="MOUD lifestyle — considered design in everyday moments" />
+    </div>
+    <div class="lp-phil-text">
+      <p class="lp-phil-eyebrow">What is MOUD</p>
+      <div class="lp-accent-line"></div>
+      <h2 class="lp-phil-heading">Setting the mood, one accessory at a time.</h2>
+      <p class="lp-phil-body">
+        MOUD is a fashion and lifestyle brand built around a single idea — that your accessories don't just complete an outfit. They set a tone. A feeling. A mood that walks into the room before you do.<br><br>
+        La Muse is our first drop. A vanity bag designed for women who choose with intention.
+      </p>
+      <div class="lp-socials">
+        <a class="lp-social-link" href="https://www.instagram.com/moudessentials/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+          <i class="ti ti-brand-instagram" aria-hidden="true"></i>
+          <span>@moudessentials</span>
+        </a>
+        <a class="lp-social-link" href="https://www.tiktok.com/@moudessentials" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+          <i class="ti ti-brand-tiktok" aria-hidden="true"></i>
+          <span>@moudessentials</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="lp-footer">
+    <a class="lp-footer-logo" href="/">
+      <img src="/moud.png" alt="MOUD" />
+    </a>
+    <div class="lp-footer-links">
+      <a href="mailto:hello@moudessentials.com">Contact</a>
+      <a href="/privacy-policy">Privacy</a>
+      <a href="/terms-of-sale">Terms</a>
+    </div>
+    <div class="lp-footer-socials">
+      <a href="https://www.instagram.com/moudessentials/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+        <i class="ti ti-brand-instagram" aria-hidden="true"></i>
+      </a>
+      <a href="https://www.tiktok.com/@moudessentials" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+        <i class="ti ti-brand-tiktok" aria-hidden="true"></i>
+      </a>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      const emailInput = document.getElementById('bar-email');
+      const submitBtn  = document.getElementById('bar-submit');
+      const statusEl   = document.getElementById('bar-status');
+      const formWrap   = document.getElementById('bar-form-wrap');
+      const EMAIL_RE   = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      submitBtn.addEventListener('click', async () => {
+        const email = emailInput.value.trim();
+        statusEl.className = 'lp-signup-status';
+        statusEl.textContent = '';
+
+        if (!EMAIL_RE.test(email)) {
+          statusEl.textContent = 'Please enter a valid email address.';
+          statusEl.classList.add('is-error');
+          return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Joining…';
+
+        try {
+          const res  = await fetch('/api/subscribe', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email }),
+          });
+          const data = await res.json().catch(() => ({}));
+
+          if (!res.ok) throw new Error(data.error || 'Something went wrong.');
+
+          formWrap.innerHTML = '<p class="lp-signup-confirmed">You\'re officially in. We\'ll let you know first.</p>';
+          statusEl.textContent = '';
+        } catch (err) {
+          statusEl.textContent = err.message || 'Something went wrong. Please try again.';
+          statusEl.classList.add('is-error');
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'I\'m in';
+        }
+      });
+
+      // Allow Enter key in the email field
+      emailInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') submitBtn.click();
+      });
+    })();
+  </script>
+</body>
+</html>

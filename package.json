@@ -1,0 +1,16 @@
+{
+  "name": "moudessentials-waitlist",
+  "version": "1.0.0",
+  "description": "Moudessentials coming-soon waitlist site",
+  "main": "server.js",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "express": "^4.19.2"
+  }
+}
