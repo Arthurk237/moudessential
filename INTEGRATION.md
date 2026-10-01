@@ -74,6 +74,10 @@ If something fails, check:
   Dashboard organization. This is automatic if you created the store yourself.
 - 403 on the customer endpoints → double check the `read_customers` /
   `write_customers` scopes were added and the app was reinstalled after adding them.
+  In the Dev Dashboard that means releasing a new app version that includes the
+  scopes, then pressing **Install** again so your store picks them up. (Apps
+  installed on your own store get protected customer data access by default, so
+  there's nothing separate to request for that.)
 
 ## Step 5: Send a campaign in Shopify Email
 
