@@ -139,14 +139,6 @@ img { display: block; max-width: 100%; }
   margin-bottom: 2rem;
 }
 
-.hero-eyebrow::before {
-  content: '';
-  display: block;
-  width: 32px;
-  height: 0.5px;
-  background: var(--accent-dark);
-}
-
 .hero-headline {
   font-family: var(--serif);
   font-size: clamp(48px, 6vw, 72px);
@@ -457,14 +449,6 @@ img { display: block; max-width: 100%; }
   display: flex;
   align-items: center;
   gap: 10px;
-}
-
-.ea-eyebrow::before {
-  content: '';
-  display: block;
-  width: 28px;
-  height: 0.5px;
-  background: var(--accent-dark);
 }
 
 .ea-heading {
