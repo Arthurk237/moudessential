@@ -348,6 +348,16 @@ img { display: block; max-width: 100%; }
   font-style: italic;
 }
 
+.product-panel-subtitle {
+  display: block;
+  margin-top: 5px;
+  font-family: var(--sans);
+  font-size: 11px;
+  font-style: normal;
+  letter-spacing: 1px;
+  line-height: 1.5;
+}
+
 .product-panel-detail {
   font-size: 10px;
   letter-spacing: 1px;
