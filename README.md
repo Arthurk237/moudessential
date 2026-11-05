@@ -85,3 +85,12 @@ Defined at the top of `public/moud.css`:
   Charcoal `#2E2E2E` (text), deep gold `#A8822A` (italic accents)
 - Supporting: Soft Sand `#C8B89A`, Light Taupe `#B0A090`, Grey `#7A7268`
 - Display: Cormorant Garamond · Body: Inter
+
+## Frontend performance maintenance
+
+Page styles are inlined to avoid a render-blocking CSS request and an unstyled
+initial render. Edit `public/moud.css` or `public/styles.css`, then run
+`node scripts/inline-styles.js` to refresh the four HTML pages before committing.
+Google Fonts load asynchronously, with system font fallbacks and a no-JavaScript
+stylesheet fallback. Product photos use responsive WebP sources with JPEG
+fallbacks; preserve both sizes and image dimensions when replacing photos.

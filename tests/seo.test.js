@@ -3,6 +3,7 @@ const assert = require('node:assert/strict');
 const { spawn } = require('node:child_process');
 const { once } = require('node:events');
 const path = require('node:path');
+const fs = require('node:fs');
 
 test('SEO pages, canonical redirects, and crawler responses', async () => {
   const port = 3317;
@@ -34,11 +35,16 @@ test('SEO pages, canonical redirects, and crawler responses', async () => {
       assert.ok(html.includes(`rel="canonical" href="https://moudessentials.com${route}"`));
       assert.match(html, /name="description" content="[^"]+"/);
       assert.match(html, /property="og:url"/);
+      const cssName = route === '/' || route === '/waitlist.html' ? 'moud.css' : 'styles.css';
+      assert.ok(html.includes(`<style data-source="${cssName}">\n${fs.readFileSync(path.join(__dirname, '..', 'public', cssName), 'utf8')}</style>`));
+      assert.match(html, /media="print" onload="this.media='all'"/);
+      assert.match(html, /<noscript><link href="https:\/\/fonts.googleapis.com/);
       if (route === '/') {
         const schema = JSON.parse(html.match(/application\/ld\+json">([\s\S]*?)<\/script>/)[1]);
         assert.equal(schema['@graph'][0]['@type'], 'Organization');
         assert.match(html, /loading="eager" fetchpriority="high"/);
         assert.match(html, /href="\/waitlist.html"/);
+        assert.equal((html.match(/<source type="image\/webp"/g) || []).length, 2);
       }
     }
     for (const [source, target] of [
@@ -62,6 +68,13 @@ test('SEO pages, canonical redirects, and crawler responses', async () => {
     const asset = await fetch(base + '/moud.css');
     assert.equal(asset.status, 200);
     assert.equal(asset.headers.get('cache-control'), 'public, max-age=86400');
+    for (const image of ['la-muse-exterior', 'la-muse-exterior-900', 'la-muse-interior', 'la-muse-interior-900', 'moud-logo']) {
+      const response = await fetch(`${base}/images/${image}.webp`);
+      assert.equal(response.status, 200);
+      assert.match(response.headers.get('content-type'), /image\/webp/);
+      const body = Buffer.from(await response.arrayBuffer());
+      assert.equal(body.toString('ascii', 8, 12), 'WEBP');
+    }
     const robots = await fetch(base + '/robots.txt');
     assert.equal(robots.status, 200);
     assert.match(await robots.text(), /Disallow: \/api\//);
