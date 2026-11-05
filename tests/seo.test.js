@@ -75,6 +75,13 @@ test('SEO pages, canonical redirects, and crawler responses', async () => {
       const body = Buffer.from(await response.arrayBuffer());
       assert.equal(body.toString('ascii', 8, 12), 'WEBP');
     }
+    for (const image of ['la-muse-exterior', 'la-muse-exterior-900', 'la-muse-interior', 'la-muse-interior-900', 'og-la-muse']) {
+      const response = await fetch(`${base}/images/${image}.png`);
+      assert.equal(response.status, 200);
+      assert.match(response.headers.get('content-type'), /image\/png/);
+      const body = Buffer.from(await response.arrayBuffer());
+      assert.equal(body.subarray(0, 8).toString('hex'), '89504e470d0a1a0a');
+    }
     const robots = await fetch(base + '/robots.txt');
     assert.equal(robots.status, 200);
     assert.match(await robots.text(), /Disallow: \/api\//);

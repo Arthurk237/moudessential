@@ -71,10 +71,10 @@ moudessentials-waitlist/
 
 ## Changing the photos
 
-The two product panels on the homepage use `public/images/la-muse-exterior.jpg` and
-`public/images/la-muse-interior.jpg` (each also has a smaller `-900.jpg` version that
+The two product panels on the homepage use `public/images/la-muse-exterior.png` and
+`public/images/la-muse-interior.png` (each also has a smaller `-900.png` version that
 phones load). Replace the files with the same names, or update the `src`/`srcset` in
-`index.html`. The link-preview image shared on social apps is `images/og-la-muse.jpg`
+`index.html`. The link-preview image shared on social apps is `images/og-la-muse.png`
 (1200 × 630).
 
 ## Design tokens
@@ -92,5 +92,5 @@ Page styles are inlined to avoid a render-blocking CSS request and an unstyled
 initial render. Edit `public/moud.css` or `public/styles.css`, then run
 `node scripts/inline-styles.js` to refresh the four HTML pages before committing.
 Google Fonts load asynchronously, with system font fallbacks and a no-JavaScript
-stylesheet fallback. Product photos use responsive WebP sources with JPEG
+stylesheet fallback. Product photos use responsive WebP sources with PNG
 fallbacks; preserve both sizes and image dimensions when replacing photos.
