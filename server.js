@@ -16,8 +16,39 @@ if (!fs.existsSync(FAILED_SYNC_FILE)) {
   fs.writeFileSync(FAILED_SYNC_FILE, "[]", "utf8");
 }
 
+// Consolidate legacy document URLs before static middleware serves them.
+const canonicalPaths = new Map([
+  ["/index.html", "/"],
+  ["/privacy-policy.html", "/privacy-policy"],
+  ["/terms-of-sale.html", "/terms-of-sale"],
+  ["/privacy-policy/", "/privacy-policy"],
+  ["/terms-of-sale/", "/terms-of-sale"],
+]);
+app.use((req, res, next) => {
+  if (req.method === "GET" || req.method === "HEAD") {
+    const target = canonicalPaths.get(req.path);
+    if (target) {
+      const queryIndex = req.originalUrl.indexOf("?");
+      const query = queryIndex === -1 ? "" : req.originalUrl.slice(queryIndex);
+      return res.redirect(301, target + query);
+    }
+  }
+  next();
+});
+app.use("/api", (req, res, next) => {
+  res.set("X-Robots-Tag", "noindex");
+  res.set("Cache-Control", "no-store");
+  next();
+});
 app.use(express.json());
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "public"), {
+  setHeaders(res, filePath) {
+    // Assets use stable filenames, so revalidate daily rather than caching forever.
+    if (/\.(?:css|js|png|jpe?g|webp|svg|ico)$/i.test(filePath)) {
+      res.setHeader("Cache-Control", "public, max-age=86400");
+    }
+  },
+}));
 
 app.get("/waitlist.html", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "waitlist.html"));
