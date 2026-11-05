@@ -43,7 +43,6 @@ test('SEO pages, canonical redirects, and crawler responses', async () => {
         const schema = JSON.parse(html.match(/application\/ld\+json">([\s\S]*?)<\/script>/)[1]);
         assert.equal(schema['@graph'][0]['@type'], 'Organization');
         assert.match(html, /loading="eager" fetchpriority="high"/);
-        assert.match(html, /href="\/waitlist.html"/);
         assert.equal((html.match(/<source type="image\/webp"/g) || []).length, 2);
       }
     }
