@@ -3,6 +3,11 @@
 The MOUD "La Muse" landing page with an email waitlist that syncs to Shopify, plus a
 standalone waitlist page and the Privacy Policy / Terms of Sale pages.
 
+Brand metadata, keyword focus, PNG/WebP handling, and the Google Search Console
+indexing steps are documented in [SEO.md](SEO.md). After editing metadata in
+`scripts/sync-seo.js`, run `node scripts/sync-seo.js` and
+`node --test tests/seo.test.js`.
+
 ## Run it
 
 ```bash

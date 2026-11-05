@@ -1,9 +1,15 @@
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
-const { spawn } = require('node:child_process');
+const { spawn, execFileSync } = require('node:child_process');
 const { once } = require('node:events');
 const path = require('node:path');
 const fs = require('node:fs');
+
+test('Generated SEO metadata is current', () => {
+  execFileSync(process.execPath, ['scripts/sync-seo.js', '--check'], {
+    cwd: path.join(__dirname, '..'),
+  });
+});
 
 test('SEO pages, canonical redirects, and crawler responses', async () => {
   const port = 3317;
@@ -25,6 +31,9 @@ test('SEO pages, canonical redirects, and crawler responses', async () => {
       server.once('exit', code => { clearTimeout(timeout); reject(new Error(`Server exited: ${code}`)); });
     });
     const base = `http://127.0.0.1:${port}`;
+    const titles = new Set();
+    const descriptions = new Set();
+    const decodeHtml = value => value.replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>');
     for (const route of ['/', '/waitlist.html', '/privacy-policy', '/terms-of-sale']) {
       const response = await fetch(base + route);
       assert.equal(response.status, 200);
@@ -35,15 +44,65 @@ test('SEO pages, canonical redirects, and crawler responses', async () => {
       assert.ok(html.includes(`rel="canonical" href="https://moudessentials.com${route}"`));
       assert.match(html, /name="description" content="[^"]+"/);
       assert.match(html, /property="og:url"/);
+      const readMeta = key => {
+        const matches = [...html.matchAll(new RegExp(`<meta (?:name|property)="${key}" content="([^"]*)">`, 'g'))];
+        assert.equal(matches.length, 1, `Expected one ${key} tag on ${route}`);
+        return decodeHtml(matches[0][1]);
+      };
+      const title = decodeHtml(html.match(/<title>([^<]+)<\/title>/)[1]);
+      const description = readMeta('description');
+      assert.match(title, /Moudessentials/);
+      assert.match(description, /Moudessentials/);
+      assert.ok(!titles.has(title), 'Each page needs a distinct title');
+      assert.ok(!descriptions.has(description), 'Each page needs a distinct description');
+      titles.add(title);
+      descriptions.add(description);
+      assert.equal(readMeta('og:site_name'), 'Moudessentials');
+      assert.equal(readMeta('og:title'), title);
+      assert.equal(readMeta('twitter:title'), title);
+      assert.equal(readMeta('og:description'), description);
+      assert.equal(readMeta('twitter:description'), description);
+      assert.equal(readMeta('og:url'), `https://moudessentials.com${route}`);
+      assert.equal(readMeta('og:image:type'), 'image/png');
+      assert.equal(readMeta('og:image'), readMeta('twitter:image'));
+      assert.match(readMeta('og:image'), /\/images\/og-la-muse\.png$/);
+      assert.equal(readMeta('robots'), 'index,follow,max-image-preview:large');
+      assert.doesNotMatch(response.headers.get('x-robots-tag') || '', /noindex/);
+      assert.doesNotMatch(html, /name="keywords"|insert final domain|moudessentials\.ca/);
+      const structuredData = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)];
+      assert.equal(structuredData.length, 1);
+      const schema = JSON.parse(structuredData[0][1]);
+      assert.equal(schema['@context'], 'https://schema.org');
+      const webpage = schema['@graph'].find(node => node['@type'] === 'WebPage');
+      assert.equal(webpage.url, `https://moudessentials.com${route}`);
+      assert.equal(webpage.name, title);
+      assert.equal(webpage.description, description);
+      assert.equal(webpage.isPartOf['@id'], 'https://moudessentials.com/#website');
+      assert.equal(webpage.about['@id'], 'https://moudessentials.com/#organization');
       const cssName = route === '/' || route === '/waitlist.html' ? 'moud.css' : 'styles.css';
       assert.ok(html.includes(`<style data-source="${cssName}">\n${fs.readFileSync(path.join(__dirname, '..', 'public', cssName), 'utf8')}</style>`));
       assert.match(html, /media="print" onload="this.media='all'"/);
       assert.match(html, /<noscript><link href="https:\/\/fonts.googleapis.com/);
       if (route === '/') {
-        const schema = JSON.parse(html.match(/application\/ld\+json">([\s\S]*?)<\/script>/)[1]);
-        assert.equal(schema['@graph'][0]['@type'], 'Organization');
+        assert.match(title, /^Moudessentials \| Luxury Leather Bags & Accessories$/);
+        for (const type of ['Organization', 'WebSite']) {
+          const entity = schema['@graph'].find(node => node['@type'] === type);
+          assert.equal(entity.name, 'Moudessentials');
+          assert.equal(entity.alternateName, 'MOUD');
+          assert.equal(entity.url, 'https://moudessentials.com/');
+        }
+        assert.match(html.split('<body>')[1], /Moudessentials \(MOUD\)/);
+        assert.match(html, /La Muse <span class="product-panel-subtitle">leather vanity bag<\/span>/);
+        assert.doesNotMatch(html, /class="product-story"/);
+        assert.match(html, /href="\/waitlist.html"/);
         assert.match(html, /loading="eager" fetchpriority="high"/);
         assert.equal((html.match(/<source type="image\/webp"/g) || []).length, 2);
+      } else {
+        const breadcrumbs = schema['@graph'].find(node => node['@type'] === 'BreadcrumbList');
+        assert.equal(webpage.breadcrumb['@id'], breadcrumbs['@id']);
+        assert.deepEqual(breadcrumbs.itemListElement.map(item => item.position), [1, 2]);
+        assert.equal(breadcrumbs.itemListElement[0].item, 'https://moudessentials.com/');
+        assert.equal(breadcrumbs.itemListElement[1].item, webpage.url);
       }
     }
     for (const [source, target] of [
